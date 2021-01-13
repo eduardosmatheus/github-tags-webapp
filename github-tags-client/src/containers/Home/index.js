@@ -8,13 +8,19 @@ class Home extends Component {
   
   componentDidMount() {
     const { history, location, login, isLogged } = this.props;
-    if (!isLogged && location && location.search) {
+    if (!isLogged && !location.search) {
+      history.push('/login');
+      return;
+    } else if (!isLogged && location.search) {
       const parameters = new URLSearchParams(location.search);
-      login(parameters.get('code'));
+      const code = parameters.get('code');
+      if (!code) {
+        this.handleLogout();
+      } else {
+        login(code);
+      }
     } else if (isLogged && location.search) {
       history.push('/');
-    } else {
-      history.push('/login');
     }
   }
 

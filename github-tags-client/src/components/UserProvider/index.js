@@ -27,10 +27,14 @@ export class UserProvider extends React.Component {
   }
 
   claimAccess = async (authCode) => {
-    const { data: claims } = await api.post('/users/claim-access', null, {
-      params: { code: authCode }
-    });
-    this.login(claims.access_token);
+    try {
+      const { data: claims } = await api.post('/users/claim-access', null, {
+        params: { code: authCode }
+      });
+      this.login(claims.access_token);
+    } catch (error) {
+      this.logout();
+    }
   }
 
   login = (token) => {
