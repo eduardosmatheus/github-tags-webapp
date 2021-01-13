@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import GithubLogin from '../../components/GithubLogin'
 
-export default class Login extends Component {
-  render() {
-    return (
-      <div className="App">
-        Bem vindo ao Criador de Tags para busca no Github!
-        <GithubLogin />
-      </div>
-    )
-  }
+export default function Login() {
+  useEffect(() => { localStorage.clear() }, []);
+  return (
+    <div className="App">
+      Bem vindo ao Criador de Tags para busca no Github!
+      <GithubLogin />
+    </div>
+  )
 }
