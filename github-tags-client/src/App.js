@@ -1,13 +1,15 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './App.scss';
-import GithubLogin from './components/GithubLogin';
+import Home from './containers/Home';
+import Login from './containers/Login';
 
 function App() {
   return (
-    <div className="App">
-      Bem vindo ao Criador de Tags para busca no Github!
-      <GithubLogin />
-    </div>
+    <Switch>
+      <Route path="/login" component={Login} />
+      <Route path="/home" component={Home} />
+    </Switch>
   );
 }
 
