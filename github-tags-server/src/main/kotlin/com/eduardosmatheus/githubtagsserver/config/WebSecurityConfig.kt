@@ -1,7 +1,11 @@
 package com.eduardosmatheus.githubtagsserver.config
 
+import com.eduardosmatheus.githubtagsserver.security.AuthorizationFilter
+import com.eduardosmatheus.githubtagsserver.security.GithubAuthManager
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -18,11 +22,19 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
-        httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        httpSecurity.sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().cors().and()
             .csrf().disable()
             .authorizeRequests()
-            .anyRequest().permitAll()
+            .antMatchers(HttpMethod.POST, "/users/claim-access").permitAll()
+            .anyRequest().authenticated()
+            .and()
+            .addFilter(AuthorizationFilter(authenticationManager()))
+    }
+
+    override fun authenticationManager(): AuthenticationManager {
+        return GithubAuthManager()
     }
 
     @Bean
