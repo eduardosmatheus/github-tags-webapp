@@ -20,7 +20,7 @@ export default class GithubLogin extends Component {
 
   handleOpenAuth = () => {
     const authParams = this.mountLoginAuthorizationParams();
-    window.open(`https://github.com/login/oauth/authorize${authParams}`);
+    window.location.replace(`https://github.com/login/oauth/authorize${authParams}`);
   }
 
   render() {
