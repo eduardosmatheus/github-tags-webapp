@@ -28,7 +28,7 @@ export default class GithubLogin extends Component {
       <Button variant="dark" onClick={this.handleOpenAuth}>
         <FontAwesomeIcon icon={faGithub} />
         {' '}
-        Login with Github
+        Fazer login com o Github
       </Button>
     )
   }

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
-import { Button } from 'react-bootstrap';
+import { faPowerOff, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { withUser } from '../../components/UserProvider';
+import Styles from './Home.module.scss';
 
 class Home extends Component {
   
@@ -29,19 +30,45 @@ class Home extends Component {
     this.props.history.push('/login');
   }
 
+  renderLoadingIcon = () => (
+    <FontAwesomeIcon icon={faSpinner} spin />
+  )
+
+  renderUserInfo = () => {
+    const { user } = this.props;
+    const { login, avatar_url } = user;
+    return (
+      <>
+        <img className={Styles.UserLogo} src={avatar_url} alt={login} />
+        {' '}
+        {login}
+      </>
+    )
+  }
+
   render() {
     const { user } = this.props;
     return (
-      <div>
-        <h1>Bem vindo à Home! Aqui você poderá fazer buscas.</h1>
-        <p>Abaixo tem o usuário Logado:</p>
-        <h2>{user && JSON.stringify(user)}</h2>
-        <Button variant="danger" onClick={this.handleLogout}>
-          <FontAwesomeIcon icon={faPowerOff} />
-          {' '}
-          Logout
-        </Button>
-      </div>
+      <>
+        <Navbar expand="lg" bg="dark" variant="dark">
+          <Navbar.Brand>Buscador de Tags</Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+          <Navbar.Collapse className="justify-content-end">
+            <Nav>
+              <NavDropdown title={!user ? this.renderLoadingIcon() : this.renderUserInfo()}>
+                <NavDropdown.Item onSelect={this.handleLogout}>
+                  <FontAwesomeIcon icon={faPowerOff} />
+                  {' '}
+                  Sair
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Navbar>
+        <Container fluid>
+          <h1>Bem vindo à Home! Aqui você poderá fazer buscas.</h1>
+        </Container>
+      </>
     )
   }
 }
