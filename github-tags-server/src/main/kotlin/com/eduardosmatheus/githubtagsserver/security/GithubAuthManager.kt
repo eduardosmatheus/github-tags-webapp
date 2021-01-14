@@ -1,6 +1,6 @@
 package com.eduardosmatheus.githubtagsserver.security
 
-import com.eduardosmatheus.githubtagsserver.services.GithubUser
+import com.eduardosmatheus.githubtagsserver.model.GithubUser
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
