@@ -8,4 +8,11 @@ import org.springframework.stereotype.Service
 @Service
 class UserService {
 
+    @Autowired
+    private lateinit var usersRepository: UsersRepository
+
+    fun signUp(user: User): User {
+
+        return usersRepository.save(user)
+    }
 }
