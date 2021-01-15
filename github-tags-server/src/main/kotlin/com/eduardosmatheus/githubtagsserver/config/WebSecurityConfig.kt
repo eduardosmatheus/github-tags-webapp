@@ -1,16 +1,19 @@
 package com.eduardosmatheus.githubtagsserver.config
 
-import com.eduardosmatheus.githubtagsserver.security.AuthorizationFilter
-import com.eduardosmatheus.githubtagsserver.security.GithubAuthManager
+import com.eduardosmatheus.githubtagsserver.security.AuthenticationFilter
+import com.eduardosmatheus.githubtagsserver.security.SystemUserAuthManager
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -20,6 +23,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
+    @Autowired
+    private lateinit var authManager: SystemUserAuthManager
+
     @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
         httpSecurity.sessionManagement()
@@ -27,14 +33,16 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .and().cors().and()
             .csrf().disable()
             .authorizeRequests()
+            .antMatchers(HttpMethod.POST, "/login").permitAll()
+            .antMatchers(HttpMethod.POST, "/users").permitAll()
             .antMatchers(HttpMethod.POST, "/users/claim-access").permitAll()
             .anyRequest().authenticated()
             .and()
-            .addFilter(AuthorizationFilter(authenticationManager()))
+            .addFilter(AuthenticationFilter(authenticationManager()))
     }
 
     override fun authenticationManager(): AuthenticationManager {
-        return GithubAuthManager()
+        return authManager
     }
 
     @Bean
@@ -53,4 +61,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         source.registerCorsConfiguration("/**", configuration)
         return source
     }
+
+    @Bean
+    fun bCryptPasswordEncoder() = BCryptPasswordEncoder()
 }
