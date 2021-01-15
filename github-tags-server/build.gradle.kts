@@ -5,6 +5,8 @@ plugins {
 	id("io.spring.dependency-management") version "1.0.10.RELEASE"
 	kotlin("jvm") version "1.4.21"
 	kotlin("plugin.spring") version "1.4.21"
+	kotlin("plugin.jpa") version "1.4.21"
+//	id("org.jetbrains.kotlin.plugin.noarg") version "1.4.21"
 }
 
 group = "com.eduardosmatheus"
@@ -16,17 +18,21 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+//	implementation("org.jetbrains.kotlin:kotlin-noarg:1.4.21")
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+	implementation("org.jetbrains.kotlin:kotlin-noarg")
+	implementation("com.auth0:java-jwt:3.12.0")
+
 	runtimeOnly("org.postgresql:postgresql")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation ("org.jetbrains.kotlin:kotlin-test-junit")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 }
 
 tasks.withType<KotlinCompile> {
