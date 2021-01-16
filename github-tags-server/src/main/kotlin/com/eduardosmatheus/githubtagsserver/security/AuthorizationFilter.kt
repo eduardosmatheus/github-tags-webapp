@@ -1,32 +1,34 @@
 package com.eduardosmatheus.githubtagsserver.security
 
-import com.eduardosmatheus.githubtagsserver.services.GithubService
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.authentication.AuthenticationManager
+import com.auth0.jwt.JWT
+import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
-import org.springframework.stereotype.Service
+import org.springframework.web.filter.GenericFilterBean
 import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
-@Service
-class AuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenticationFilter(authManager) {
+class AuthorizationFilter : GenericFilterBean() {
 
-    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
-        val accessToken = request.getHeader("Authorization")
-        if (accessToken == null) {
-            chain.doFilter(request, response)
-            return
-        }
-        val authenticatedUser = getAuthenticatedUser(accessToken)
-        SecurityContextHolder.getContext().authentication = authenticatedUser
-        chain.doFilter(request, response)
+    private fun getUser(token: String): UsernamePasswordAuthenticationToken {
+        val algorithm = Algorithm.HMAC256("secret")
+        val verifier = JWT.require(algorithm).build()
+        val decodedToken = verifier.verify(token)
+        val user = decodedToken.getClaim("user").asMap()
+
+        return UsernamePasswordAuthenticationToken(user, null, emptyList())
     }
 
-    private fun getAuthenticatedUser(accessToken: String): UsernamePasswordAuthenticationToken? {
-        val githubUser = GithubService.getCurrentUser(accessToken) ?: return null
-        return UsernamePasswordAuthenticationToken(githubUser, null)
+    override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
+        val accessToken = (request as HttpServletRequest).getHeader("Authorization")
+        if (accessToken == null) {
+            chain?.doFilter(request, response)
+            return
+        }
+        val verifiedUser = getUser(accessToken.replace("Bearer ", ""))
+        SecurityContextHolder.getContext().authentication = verifiedUser
+        chain?.doFilter(request, response)
     }
 }

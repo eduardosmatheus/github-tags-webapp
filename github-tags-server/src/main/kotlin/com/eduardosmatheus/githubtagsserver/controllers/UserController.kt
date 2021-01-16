@@ -1,6 +1,5 @@
 package com.eduardosmatheus.githubtagsserver.controllers
 
-import com.eduardosmatheus.githubtagsserver.model.GithubUser
 import com.eduardosmatheus.githubtagsserver.model.User
 import com.eduardosmatheus.githubtagsserver.services.GithubService
 import com.eduardosmatheus.githubtagsserver.services.UserService
@@ -9,7 +8,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 class UserController {
 
     @Autowired
@@ -19,7 +18,7 @@ class UserController {
     fun authorize(@RequestParam code: String) = GithubService.getClaims(code)
 
     @GetMapping("/current")
-    fun getCurrentUser(authentication: Authentication) = authentication.principal as GithubUser
+    fun getCurrentUser(authentication: Authentication) = authentication.principal
 
     @PostMapping
     fun signUp(@RequestBody user: User) = userService.signUp(user)

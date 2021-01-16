@@ -1,7 +1,9 @@
 package com.eduardosmatheus.githubtagsserver.config
 
+import com.auth0.jwt.algorithms.Algorithm
 import com.eduardosmatheus.githubtagsserver.security.AuthenticationFilter
-import com.eduardosmatheus.githubtagsserver.security.SystemUserAuthManager
+import com.eduardosmatheus.githubtagsserver.security.AuthorizationFilter
+import com.eduardosmatheus.githubtagsserver.security.SystemUserAuthProvider
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -14,6 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -24,7 +27,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Autowired
-    private lateinit var authManager: SystemUserAuthManager
+    private lateinit var authProvider: SystemUserAuthProvider
 
     @Throws(Exception::class)
     override fun configure(httpSecurity: HttpSecurity) {
@@ -33,16 +36,23 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
             .and().cors().and()
             .csrf().disable()
             .authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS).permitAll()
             .antMatchers(HttpMethod.POST, "/login").permitAll()
-            .antMatchers(HttpMethod.POST, "/users").permitAll()
-            .antMatchers(HttpMethod.POST, "/users/claim-access").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/users").permitAll()
+            .antMatchers(HttpMethod.POST, "/api/users/claim-access").permitAll()
             .anyRequest().authenticated()
             .and()
-            .addFilter(AuthenticationFilter(authenticationManager()))
+            .addFilter(AuthenticationFilter(authenticationManagerBean()))
+            .addFilterBefore(AuthorizationFilter(), BasicAuthenticationFilter::class.java)
     }
 
-    override fun authenticationManager(): AuthenticationManager {
-        return authManager
+    @Bean
+    override fun authenticationManagerBean(): AuthenticationManager {
+        return super.authenticationManagerBean()
+    }
+
+    override fun configure(auth: AuthenticationManagerBuilder?) {
+        auth?.authenticationProvider(authProvider)
     }
 
     @Bean
@@ -64,4 +74,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     @Bean
     fun bCryptPasswordEncoder() = BCryptPasswordEncoder()
+
+    @Bean
+    fun algorithm() = Algorithm.HMAC256("MySecret")
 }

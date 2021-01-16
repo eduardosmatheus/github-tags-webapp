@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class AuthenticationFilter(authManager: AuthenticationManager): UsernamePasswordAuthenticationFilter(authManager) {
+class AuthenticationFilter(authManager: AuthenticationManager)
+    : UsernamePasswordAuthenticationFilter(authManager) {
     override fun attemptAuthentication(request: HttpServletRequest?, response: HttpServletResponse?): Authentication {
         val mapper = jacksonObjectMapper()
         mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES, true)
@@ -27,7 +28,7 @@ class AuthenticationFilter(authManager: AuthenticationManager): UsernamePassword
         return try {
             authenticationManager.authenticate(
                 UsernamePasswordAuthenticationToken(
-                    user,
+                    user.email,
                     user.password,
                     emptyList()
                 )
@@ -43,9 +44,15 @@ class AuthenticationFilter(authManager: AuthenticationManager): UsernamePassword
         chain: FilterChain?,
         authResult: Authentication?
     ) {
-        val verifiedUser = authResult?.principal as User
-        val algorithm = Algorithm.HMAC256("MySecret")
+        val verifiedUser = (authResult?.principal as User)
+        val algorithm = Algorithm.HMAC256("secret")
+        val map = mapOf<String, Any>(
+            "id" to verifiedUser.id,
+            "email" to verifiedUser.email,
+            "fullName" to verifiedUser.fullName
+        )
         val jwtToken = JWT.create()
+            .withClaim("user", map)
             .withSubject(verifiedUser.email)
             .sign(algorithm)
         response?.writer?.write(jwtToken)
