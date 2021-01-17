@@ -17,6 +17,8 @@ object JwtTokenGenerator {
 			"id" to verifiedUser.id,
 			"email" to verifiedUser.email,
 			"fullName" to verifiedUser.fullName,
+			"avatarURL" to verifiedUser.avatarURL,
+			"username" to verifiedUser.username,
 			"githubClaims" to githubClaimsMap
 		)
 		return JWT.create()

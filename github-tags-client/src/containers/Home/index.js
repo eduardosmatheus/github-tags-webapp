@@ -43,12 +43,12 @@ class Home extends Component {
 
   renderUserInfo = () => {
     const { user } = this.props;
-    const { login, avatar_url } = user;
+    const { username, avatarURL } = user;
     return (
       <>
-        <img className={Styles.UserLogo} src={avatar_url} alt={login} />
+        <img className={Styles.UserLogo} src={avatarURL} alt={username} />
         {' '}
-        {login}
+        {username}
       </>
     )
   }
