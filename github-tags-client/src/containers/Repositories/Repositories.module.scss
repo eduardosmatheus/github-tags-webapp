@@ -1,0 +1,17 @@
+.RepositoriesContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.TagsSearchForm {
+  width: 30vw;
+  padding-bottom: 20px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid grey;
+  display: inline-flex;
+  justify-content: space-between;
+}
