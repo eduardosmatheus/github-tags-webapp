@@ -45,40 +45,7 @@ function Login({ isLogged, login, history }) {
             <h3>Bem vindo ao Criador de Tags para busca no Github!</h3>
           </Col>
           <Col sm={12} xs={12} md={3}>
-            <Form onSubmit={handleLogin}>
-              <FormGroup>
-                <FormLabel>E-mail</FormLabel>
-                <FormControl
-                  type="email"
-                  name="email"
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-                  required
-                />
-              </FormGroup>
-              <FormGroup>
-                <FormLabel>Senha</FormLabel>
-                <FormControl
-                  type="password"
-                  name="password"
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  required
-                />
-              </FormGroup>
-              <Button type="submit" variant="success">
-                <FontAwesomeIcon
-                  icon={isSigningIn ? faSpinner : faSignInAlt}
-                  spin={isSigningIn}
-                />
-                {' '}
-                Entrar
-              </Button>
-            </Form>
             <GithubLogin />
-            <Link to="/sign-up">
-              Cadastre-se aqui
-            </Link>
           </Col>
         </Row>
       </Jumbotron>

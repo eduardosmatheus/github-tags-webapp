@@ -25,6 +25,13 @@ class Home extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    const { user, history } = this.props;
+    if (prevProps.user !== user && user) {
+      history.replace('/');
+    }
+  }
+
   handleLogout = () => {
     this.props.logout();
     this.props.history.push('/login');
