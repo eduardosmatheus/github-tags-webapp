@@ -1,27 +1,51 @@
 package com.eduardosmatheus.githubtagsserver.services
 
-import com.eduardosmatheus.githubtagsserver.model.GithubUser
+import com.eduardosmatheus.githubtagsserver.model.User
+import com.eduardosmatheus.githubtagsserver.model.github.GithubUser
+import com.eduardosmatheus.githubtagsserver.repositories.UsersRepository
+import com.eduardosmatheus.githubtagsserver.security.JwtTokenGenerator
 import com.eduardosmatheus.githubtagsserver.security.UserClaims
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize
-import org.springframework.http.*
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.http.HttpStatus
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
+import org.springframework.web.server.ResponseStatusException
+import org.springframework.web.util.UriComponentsBuilder
 
-object GithubService {
+@Service
+class GithubService {
+
     private val githubApiBaseURL = "https://api.github.com/user"
 
+    @Autowired
+    private lateinit var usersRepository: UsersRepository
+
+    fun authorize(code: String): String {
+        val userClaims = getClaims(code)
+        val currentGithubUser = getCurrentUser(userClaims.githubAccessToken)
+            ?: throw BadCredentialsException("")
+        val verifiedUser =
+            usersRepository.findByEmail(currentGithubUser.email)
+            ?: usersRepository.save(
+                User(
+                    id = null,
+                    email = currentGithubUser.email,
+                    password = "",
+                    fullName = currentGithubUser.name,
+                    username = currentGithubUser.login,
+                    avatarURL = currentGithubUser.avatar_url
+                )
+            )
+        return JwtTokenGenerator.generate(verifiedUser.copy(githubClaims = userClaims))
+    }
+
     fun getCurrentUser(token: String): GithubUser? {
-        val restClient = RestTemplate()
-        val headers = HttpHeaders()
-        headers["Authorization"] = token
-        val entity = HttpEntity<Any>(headers)
-        val response = restClient.exchange(githubApiBaseURL, HttpMethod.GET,
-            entity, GithubUser::class.java)
+        val restClient = RestTemplateBuilder()
+            .defaultHeader("Authorization", "token $token")
+            .build()
+        val response = restClient.getForEntity(githubApiBaseURL, GithubUser::class.java)
         return response.body
     }
 
@@ -33,26 +57,35 @@ object GithubService {
     private val client_secret = "bf7914d3bce7e9a5cb6ec9eb9126cc6eeafc8bc3"
     private val BAD_VERIFICATION_CODE = "bad_verification_code"
 
-    fun getClaims(code: String): ResponseEntity<Any> {
+    fun getClaims(code: String): UserClaims {
         val response = getGithubAuthorization(code)
         val errorCode = response["error"]
         if (errorCode != null && errorCode.asText() == BAD_VERIFICATION_CODE) {
-            return ResponseEntity(response, HttpStatus.FORBIDDEN)
+            throw ResponseStatusException(HttpStatus.FORBIDDEN, "Por favor, autorize esta aplicação novamente.")
         }
-        return ResponseEntity(response, HttpStatus.OK)
+        return UserClaims(
+            response["access_token"]!!.asText(),
+            response["scope"]!!.asText(),
+            response["token_type"]!!.asText()
+        )
     }
 
     private fun getGithubAuthorization(code: String): JsonNode {
-        val client = RestTemplate()
-        val headers = HttpHeaders()
-        headers["Accept"] = "application/json"
-        val entity = HttpEntity<UserClaims>(headers)
-        val response = client.exchange(
-            "$githubBaseURL?client_id=${client_id}&client_secret=${client_secret}&code=$code",
-            HttpMethod.POST,
-            entity,
-            JsonNode::class.java
-        )
+        val url = UriComponentsBuilder.newInstance()
+            .scheme("https")
+            .host("github.com")
+            .path("/login/oauth/access_token")
+            .queryParam("client_id", client_id)
+            .queryParam("client_secret", client_secret)
+            .queryParam("code", code)
+            .build()
+
+        val client = RestTemplateBuilder()
+            .defaultHeader("Accept", "application/json")
+            .build()
+
+        val response = client.postForEntity(url.toUriString(), null, JsonNode::class.java)
+
         return response.body!!
     }
 }

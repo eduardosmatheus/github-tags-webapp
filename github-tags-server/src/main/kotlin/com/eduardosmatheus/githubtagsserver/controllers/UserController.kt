@@ -14,8 +14,11 @@ class UserController {
     @Autowired
     private lateinit var userService: UserService
 
+    @Autowired
+    private lateinit var githubService: GithubService
+
     @PostMapping("/claim-access")
-    fun authorize(@RequestParam code: String) = GithubService.getClaims(code)
+    fun authorize(@RequestParam code: String) = githubService.authorize(code)
 
     @GetMapping("/current")
     fun getCurrentUser(authentication: Authentication) = authentication.principal
