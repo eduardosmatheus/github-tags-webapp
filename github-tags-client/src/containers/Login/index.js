@@ -1,42 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react';
 import {
   Jumbotron,
   Container,
   Row,
   Col,
-  Form,
-  FormGroup,
-  FormLabel,
-  FormControl,
-  Button
 } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Link, Redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Redirect } from 'react-router-dom';
 import GithubLogin from '../../components/GithubLogin'
-import api from '../../api';
 import { withUser } from '../../components/UserProvider';
 
 function Login({ isLogged, login, history }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isSigningIn, setIsSigningIn] = useState(false);
-
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setIsSigningIn(true);
-    try {
-      const { data: accessToken } = await api.post('/login', { email, password });
-      login(accessToken);
-      history.push('/');
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setIsSigningIn(false);
-    }
-  };
-
   return isLogged ? <Redirect to="/" /> : (
     <Container>
       <Jumbotron>
