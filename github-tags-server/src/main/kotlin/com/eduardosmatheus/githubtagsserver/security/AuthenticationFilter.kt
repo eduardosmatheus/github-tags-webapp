@@ -45,16 +45,7 @@ class AuthenticationFilter(authManager: AuthenticationManager)
         authResult: Authentication?
     ) {
         val verifiedUser = (authResult?.principal as User)
-        val algorithm = Algorithm.HMAC256("secret")
-        val map = mapOf<String, Any>(
-            "id" to verifiedUser.id,
-            "email" to verifiedUser.email,
-            "fullName" to verifiedUser.fullName
-        )
-        val jwtToken = JWT.create()
-            .withClaim("user", map)
-            .withSubject(verifiedUser.email)
-            .sign(algorithm)
+        val jwtToken = JwtTokenGenerator.generate(verifiedUser)
         response?.writer?.write(jwtToken)
         response?.writer?.flush()
     }
