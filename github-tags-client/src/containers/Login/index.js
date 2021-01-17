@@ -12,12 +12,13 @@ import {
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import GithubLogin from '../../components/GithubLogin'
 import api from '../../api';
 import { withUser } from '../../components/UserProvider';
 
-function Login({ login, history }) {
+function Login({ isLogged, login, history }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -30,13 +31,13 @@ function Login({ login, history }) {
       login(accessToken);
       history.push('/');
     } catch (error) {
-      // TODO Toast
+      toast.error(error.message);
     } finally {
       setIsSigningIn(false);
     }
   };
 
-  return (
+  return isLogged ? <Redirect to="/" /> : (
     <Container>
       <Jumbotron>
         <Row className="justify-content-between">
