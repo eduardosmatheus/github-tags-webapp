@@ -1,19 +1,14 @@
 import React, { Component } from 'react';
+import { Switch, Route, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, faPowerOff, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Card, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { toast } from 'react-toastify';
+import { Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import { withUser } from '../../components/UserProvider';
 import Styles from './Home.module.scss';
-import api from '../../api';
-import RepositoryList from './RepositoryList';
+import Repositories from '../Repositories';
+import Tags from '../Tags';
 
 class Home extends Component {
-  
-  state = {
-    repositories: []
-  }
-
   componentDidMount() {
     const { history, location, claimAccess, isLogged } = this.props;
     if (!isLogged && !location.search) {
@@ -30,7 +25,6 @@ class Home extends Component {
     } else if (isLogged && location.search) {
       history.push('/');
     }
-    this.handleLoadRepositories();
   }
 
   componentDidUpdate(prevProps) {
@@ -45,21 +39,11 @@ class Home extends Component {
     this.props.history.push('/login');
   }
 
-  handleLoadRepositories = async () => {
-    try {
-      const { data: repositories } = await api.get('/api/github/starred-repos');
-      this.setState({ repositories });
-    } catch (error) {
-      toast.error(error.message);
-    }
-  }
-
-  renderLoadingIcon = () => (
-    <FontAwesomeIcon icon={faSpinner} spin />
-  )
-
   renderUserInfo = () => {
     const { user } = this.props;
+    if (!user) {
+      return <FontAwesomeIcon icon={faSpinner} spin />;
+    }
     const { username, avatarURL } = user;
     return (
       <>
@@ -71,18 +55,24 @@ class Home extends Component {
   }
 
   render() {
-    const { user } = this.props;
-    const { repositories } = this.state;
     return (
       <>
         <Navbar expand="lg" bg="dark" variant="dark">
           <Navbar.Brand>
-            <FontAwesomeIcon icon={faHome} />
+            <Link to="/">
+              <FontAwesomeIcon icon={faHome} />
+            </Link>
           </Navbar.Brand>
+          <Nav>
+            <Nav.Link as={Link} to="/repositories">
+              * Repositórios
+            </Nav.Link>
+            <Nav.Link>Tags</Nav.Link>
+          </Nav>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
             <Nav>
-              <NavDropdown title={!user ? this.renderLoadingIcon() : this.renderUserInfo()}>
+              <NavDropdown title={this.renderUserInfo()}>
                 <NavDropdown.Item onSelect={this.handleLogout}>
                   <FontAwesomeIcon icon={faPowerOff} />
                   {' '}
@@ -92,8 +82,12 @@ class Home extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <h1>Meus repositórios</h1>
-        <RepositoryList {...{ repositories }} />
+        <div className="main-app-container">
+          <Switch>
+            <Route path="/repositories" component={Repositories} />
+            <Route path="/tags" component={Tags} />
+          </Switch>
+        </div>
       </>
     )
   }
