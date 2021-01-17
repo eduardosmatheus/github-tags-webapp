@@ -7,11 +7,13 @@ import SignUp from './containers/SignUp';
 
 function App() {
   return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/sign-up" component={SignUp} />
-      <Route path="/" component={Home} />
-    </Switch>
+    <div className="main-app-container">
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/sign-up" component={SignUp} />
+        <Route path="/" component={Home} />
+      </Switch>
+    </div>
   );
 }
 

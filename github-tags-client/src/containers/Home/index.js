@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPowerOff, faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { faHome, faPowerOff, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Card, Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { withUser } from '../../components/UserProvider';
 import Styles from './Home.module.scss';
+import api from '../../api';
+import RepositoryList from './RepositoryList';
 
 class Home extends Component {
   
+  state = {
+    repositories: []
+  }
+
   componentDidMount() {
     const { history, location, claimAccess, isLogged } = this.props;
     if (!isLogged && !location.search) {
@@ -23,6 +30,7 @@ class Home extends Component {
     } else if (isLogged && location.search) {
       history.push('/');
     }
+    this.handleLoadRepositories();
   }
 
   componentDidUpdate(prevProps) {
@@ -35,6 +43,15 @@ class Home extends Component {
   handleLogout = () => {
     this.props.logout();
     this.props.history.push('/login');
+  }
+
+  handleLoadRepositories = async () => {
+    try {
+      const { data: repositories } = await api.get('/api/github/starred-repos');
+      this.setState({ repositories });
+    } catch (error) {
+      toast.error(error.message);
+    }
   }
 
   renderLoadingIcon = () => (
@@ -55,10 +72,13 @@ class Home extends Component {
 
   render() {
     const { user } = this.props;
+    const { repositories } = this.state;
     return (
       <>
         <Navbar expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand>Buscador de Tags</Navbar.Brand>
+          <Navbar.Brand>
+            <FontAwesomeIcon icon={faHome} />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
             <Nav>
@@ -72,9 +92,8 @@ class Home extends Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
-        <Container fluid>
-          <h1>Bem vindo à Home! Aqui você poderá fazer buscas.</h1>
-        </Container>
+        <h1>Meus repositórios</h1>
+        <RepositoryList {...{ repositories }} />
       </>
     )
   }

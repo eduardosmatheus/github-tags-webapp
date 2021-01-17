@@ -1,0 +1,19 @@
+.RepositoryListContainer {
+  margin: 0 20%;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  height: 50vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.Repository {
+  margin-left: 5px;
+  margin-bottom: 5px;
+  border: 1px solid grey;
+}
+
+.RepoDescription {
+}
