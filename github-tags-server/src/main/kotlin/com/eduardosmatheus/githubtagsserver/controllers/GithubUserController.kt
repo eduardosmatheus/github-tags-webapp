@@ -1,6 +1,5 @@
 package com.eduardosmatheus.githubtagsserver.controllers
 
-import com.eduardosmatheus.githubtagsserver.model.User
 import com.eduardosmatheus.githubtagsserver.model.github.GithubRepository
 import com.eduardosmatheus.githubtagsserver.services.GithubAPI
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,8 +17,8 @@ class GithubUserController {
 
 	@GetMapping("/starred-repos")
 	fun getStarredRepos(authentication: Authentication): Array<GithubRepository> {
-		val foo = authentication.principal as Map<*, *>
-		val foobar = foo["githubClaims"] as Map<*, *>
-		return githubAPI.getUserStarredRepositories(foobar["githubAccessToken"]!!.toString())
+		val currentUser = authentication.principal as Map<*, *>
+		val githubClaims = currentUser["githubClaims"] as Map<*, *>
+		return githubAPI.getUserStarredRepositories(githubClaims["githubAccessToken"]!!.toString())
 	}
 }
