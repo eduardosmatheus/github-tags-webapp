@@ -8,7 +8,7 @@ import Styles from './Home.module.scss';
 class Home extends Component {
   
   componentDidMount() {
-    const { history, location, login, isLogged } = this.props;
+    const { history, location, claimAccess, isLogged } = this.props;
     if (!isLogged && !location.search) {
       history.push('/login');
       return;
@@ -18,7 +18,7 @@ class Home extends Component {
       if (!code) {
         this.handleLogout();
       } else {
-        login(code);
+        claimAccess(code);
       }
     } else if (isLogged && location.search) {
       history.push('/');

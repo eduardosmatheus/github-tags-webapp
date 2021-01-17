@@ -5,7 +5,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem('githubTags.accessToken');
   const newConfig = config;
   if (token) {
     newConfig.headers.common.Authorization = `Bearer ${token}`;

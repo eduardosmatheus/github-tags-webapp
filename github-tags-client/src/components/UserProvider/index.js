@@ -19,8 +19,8 @@ export class UserProvider extends React.Component {
 
   getCurrentUser = async () => {
     try {
-      const { data: user } = await api.get('/users/current');
-      this.setState({ user });
+      const { data: user } = await api.get('/api/users/current');
+      this.setState({ user, isLogged: true });
     } catch (error) {
       
     }
@@ -28,7 +28,7 @@ export class UserProvider extends React.Component {
 
   claimAccess = async (authCode) => {
     try {
-      const { data: claims } = await api.post('/users/claim-access', null, {
+      const { data: claims } = await api.post('/api/users/claim-access', null, {
         params: { code: authCode }
       });
       this.login(claims.access_token);
@@ -38,19 +38,20 @@ export class UserProvider extends React.Component {
   }
 
   login = (token) => {
-    localStorage.setItem('access_token', token);
+    localStorage.setItem('githubTags.accessToken', token);
     this.getCurrentUser();
   }
 
   logout = () => {
-    localStorage.removeItem('access_token');
+    localStorage.removeItem('githubTags.accessToken');
     this.setState({ isLogged: false, user: null });
   }
 
   render() {
     const { children } = this.props;
     const context = {
-      login: this.claimAccess,
+      login: this.login,
+      claimAccess: this.claimAccess,
       logout: this.logout,
       ...this.state,
     }
@@ -69,5 +70,5 @@ export function withUser(Component) {
 }
 
 export function getAccessToken() {
-  return localStorage.getItem('access_token');
+  return localStorage.getItem('githubTags.accessToken');
 }
