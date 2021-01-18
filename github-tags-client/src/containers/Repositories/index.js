@@ -32,6 +32,52 @@ export default function Repositories() {
     setShowTagsModal(!showTagsModal);
   };
 
+  const handleAddTag = async (payload) => {
+    try {
+      const { data: storedRepoTag } = await api
+        .post(`/api/repositories/${payload.repositoryId}/tags`, payload);
+      const updatedRepositories = repositories.map(repository => {
+        if (repository.id === storedRepoTag.repositoryId) {
+          return {
+            ...repository,
+            tags: [...repository.tags, storedRepoTag]
+          };
+        }
+        return repository;
+      });
+      setRepositories(updatedRepositories);
+      setCurrentRepository({
+        ...currentRepository,
+        tags: [...currentRepository.tags, storedRepoTag]
+      });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleRemoveTag = async ({ id, repositoryId }) => {
+    try {
+      await api.delete(`/api/repositories/${repositoryId}/tags/${id}`);
+      const updatedRepositories = repositories.map(repository => {
+        if (repository.id === repositoryId) {
+          const updatedTags = repository.tags.filter(repoTag => repoTag.id !== id);
+          return {
+            ...repository,
+            tags: updatedTags
+          };
+        }
+        return repository;
+      });
+      setRepositories(updatedRepositories);
+      setCurrentRepository({
+        ...currentRepository,
+        tags: currentRepository.tags.filter(repoTag => repoTag.id !== id)
+      });
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <>
       <div className={Styles.RepositoriesContainer}>
@@ -41,6 +87,8 @@ export default function Repositories() {
         show={showTagsModal}
         onHide={() => onTagsEdit(null)}
         repository={currentRepository}
+        onAddTag={handleAddTag}
+        onRemoveTag={handleRemoveTag}
       />
     </>
   )

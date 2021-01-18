@@ -6,7 +6,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '../../../api';
 import Styles from './RepoTagsModal.module.scss';
 
-export default function RepoTagsModal({ show, onHide, repository }) {
+function RepositoryTag({ name, checked, onAdd, onRemove }) {
+  return (
+    <h3>
+      <Badge
+        className={Styles.AvailableTag}
+        variant={!checked ? 'secondary' : 'success'}
+        onClick={!checked ? onAdd : onRemove}
+      >
+        {name}
+      </Badge>
+    </h3>
+  )
+}
+
+export default function RepoTagsModal({ show, onHide, repository, onAddTag, onRemoveTag }) {
   useEffect(() => {
     handleLoadExistingTags();
   }, []);
@@ -25,40 +39,25 @@ export default function RepoTagsModal({ show, onHide, repository }) {
     }
   };
 
-  const repositoryTags = repository ? repository.tags : [];
-
   return (
     <Modal {...{ show, onHide }}>
       <Modal.Header closeButton>
         <Modal.Title>Adicionar Tags ao repositório</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
-        <p>Relacionadas</p>
-        <div className={Styles.RepositoryTags}>
-          {repositoryTags.map(({ id, tag }) => (
-            <h3>
-              <Badge
-                className={Styles.AvailableTag}
-                variant="success"
-              >
-                {tag.name}
-              </Badge>
-            </h3>
-          ))}
-        </div>
-        <p>Disponíveis</p>
         <div className={Styles.AvailableTags}>
-          {!isLoading && tags.map(tag => (
-            <h3>
-              <Badge
-                className={Styles.AvailableTag}
-                variant="secondary"
-              >
-                {tag.name}
-              </Badge>
-            </h3>
-          ))}
+          {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
+          {!isLoading && tags.map(tag => {
+            const current = repository && repository.tags.find(t => t.tag.id === tag.id);
+            return (
+              <RepositoryTag
+                name={tag.name}
+                checked={!!current}
+                onAdd={() => onAddTag({ repositoryId: repository.id, tag })}
+                onRemove={() => onRemoveTag({ repositoryId: repository.id, id: current.id })}
+              />
+            )
+          })}
         </div>
       </Modal.Body>
     </Modal>
