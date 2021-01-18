@@ -58,16 +58,14 @@ class Home extends Component {
     return (
       <>
         <Navbar expand="lg" bg="dark" variant="dark">
-          <Navbar.Brand>
-            <Link to="/">
-              <FontAwesomeIcon icon={faHome} />
-            </Link>
+          <Navbar.Brand as={Link} to="/">
+            <FontAwesomeIcon icon={faHome} />
           </Navbar.Brand>
           <Nav>
             <Nav.Link as={Link} to="/repositories">
-              * Repositórios
+              Meus Repositórios
             </Nav.Link>
-            <Nav.Link>Tags</Nav.Link>
+            <Nav.Link as={Link} to="/tags">Tags</Nav.Link>
           </Nav>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse className="justify-content-end">
@@ -85,7 +83,7 @@ class Home extends Component {
         <div className="main-app-container">
           <Switch>
             <Route path="/repositories" component={Repositories} />
-            <Route path="/tags" component={Tags} />
+            <Route path="/tags" exact component={Tags} />
           </Switch>
         </div>
       </>
