@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface GithubRepoTagsRepository: JpaRepository<GithubRepositoryTag, Int> {
 	fun findByRepositoryId(repositoryId: Int): List<GithubRepositoryTag>
+	fun findByTagId(tagId: Int): List<GithubRepositoryTag>
 }
