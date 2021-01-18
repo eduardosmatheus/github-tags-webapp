@@ -7,7 +7,7 @@ import { withUser } from '../../components/UserProvider';
 import TagForm from './TagForm';
 import api from '../../api';
 
-function Tag({ name }) {
+function Tag({ id, name, onDelete }) {
   return (
     <div className={Styles.Tag}>
       {name}
@@ -15,6 +15,7 @@ function Tag({ name }) {
       <FontAwesomeIcon
         className={Styles.DeleteTagButton}
         icon={faWindowClose}
+        onClick={() => onDelete(id)}
       />
     </div>
   )
@@ -56,6 +57,16 @@ function Tags({ user }) {
     }
   }
 
+  const handleRemoveTag = async (deletingID) => {
+    try {
+      await api.delete(`/api/tags/${deletingID}`);
+      setData(data.filter(({ id }) => id !== deletingID));
+      toast.success('Tag removida com sucesso.');
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
+
   return (
     <div className={Styles.TagsContainer}>
       <div className={Styles.TagForm}>
@@ -66,7 +77,9 @@ function Tags({ user }) {
       </div>
       <div className={Styles.TagsListContent}>
         {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
-        {!isLoading && data.map(Tag)}
+        {!isLoading && data.map(item => (
+          <Tag {...item} onDelete={handleRemoveTag} />
+        ))}
       </div>
     </div>
   )
