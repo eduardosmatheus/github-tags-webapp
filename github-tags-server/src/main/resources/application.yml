@@ -7,5 +7,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/github-tags-db
     username: postgres
     password: postgres
-hibernate:
-  dialect: org.hibernate.dialect.PostgreSQL13Dialect
+server:
+  error:
+    include-message: always

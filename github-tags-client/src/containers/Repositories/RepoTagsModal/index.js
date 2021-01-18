@@ -5,6 +5,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '../../../api';
 import Styles from './RepoTagsModal.module.scss';
+import { getMessageFromRequest } from '../../../utils/response';
 
 function RepositoryTag({ name, checked, onAdd, onRemove }) {
   return (
@@ -33,7 +34,7 @@ export default function RepoTagsModal({ show, onHide, repository, onAddTag, onRe
       const { data } = await api.get('/api/tags');
       setTags(data);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     } finally {
       setIsLoading(false);
     }

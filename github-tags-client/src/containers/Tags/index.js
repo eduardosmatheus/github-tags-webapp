@@ -6,6 +6,7 @@ import Styles from './Tags.module.scss';
 import { withUser } from '../../components/UserProvider';
 import TagForm from './TagForm';
 import api from '../../api';
+import { getMessageFromRequest } from '../../utils/response';
 
 function Tag({ id, name, onDelete }) {
   return (
@@ -36,7 +37,7 @@ function Tags({ user }) {
       const { data: tags } = await api.get('/api/tags');
       setData(tags);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +52,7 @@ function Tags({ user }) {
         savedTag
       ].sort((a, b) => a.name - b.name));
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     } finally {
       setIsSaving(false);
     }
@@ -63,7 +64,7 @@ function Tags({ user }) {
       setData(data.filter(({ id }) => id !== deletingID));
       toast.success('Tag removida com sucesso.');
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     }
   }
 

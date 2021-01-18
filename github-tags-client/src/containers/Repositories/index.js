@@ -4,6 +4,7 @@ import api from '../../api';
 import RepositoryList from './RepositoryList';
 import Styles from './Repositories.module.scss';
 import RepoTagsModal from './RepoTagsModal';
+import { getMessageFromRequest } from '../../utils/response';
 
 export default function Repositories() {
   const handleLoadRepositories = async () => {
@@ -12,7 +13,7 @@ export default function Repositories() {
       const { data: repositories } = await api.get('/api/github/starred-repos');
       setRepositories(repositories);
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +52,7 @@ export default function Repositories() {
         tags: [...currentRepository.tags, storedRepoTag]
       });
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     }
   };
 
@@ -74,7 +75,7 @@ export default function Repositories() {
         tags: currentRepository.tags.filter(repoTag => repoTag.id !== id)
       });
     } catch (error) {
-      toast.error(error.message);
+      toast.error(getMessageFromRequest(error));;
     }
   };
 
