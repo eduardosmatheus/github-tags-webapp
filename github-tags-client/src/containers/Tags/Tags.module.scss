@@ -1,0 +1,44 @@
+.TagsContainer {
+  margin: auto;
+  width: 30vw;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.TagForm {
+  width: 100%;
+
+}
+
+.TagsListContent {
+  border: 1px solid grey;
+  padding: 20px;
+  width: 100%;
+  height: 50vh;
+  margin-top: 5px;
+}
+
+.Tag {
+  width: 100%;
+  height: 50px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border: 1px solid grey;
+  border-radius: 20px;
+  
+  background-color: #007bff;
+  color: white;
+  font-size: 30px;
+  font-weight: 700;
+
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.DeleteTagButton {
+  cursor: pointer;
+}
