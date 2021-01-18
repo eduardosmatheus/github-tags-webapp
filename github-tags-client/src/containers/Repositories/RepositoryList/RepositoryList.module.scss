@@ -26,3 +26,22 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.RepoDescription {
+  width: 60%;  
+}
+
+.RepositoryTagsList {
+  margin-left: 5px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 120px;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.RepositoryTag {
+  margin-top: 5px;
+}
