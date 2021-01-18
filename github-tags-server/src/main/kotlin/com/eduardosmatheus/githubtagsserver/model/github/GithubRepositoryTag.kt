@@ -8,7 +8,7 @@ data class GithubRepositoryTag(
 	@Id @GeneratedValue
 	val id: Int,
 	@Column(name = "repository_id")
-	val repositoryID: Int,
+	val repositoryId: Int,
 	@ManyToOne
 	@JoinColumn(name = "tag_id")
 	val tag: Tag

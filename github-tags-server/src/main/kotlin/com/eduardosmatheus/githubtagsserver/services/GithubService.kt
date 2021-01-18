@@ -1,7 +1,9 @@
 package com.eduardosmatheus.githubtagsserver.services
 
 import com.eduardosmatheus.githubtagsserver.model.User
+import com.eduardosmatheus.githubtagsserver.model.github.GithubRepository
 import com.eduardosmatheus.githubtagsserver.model.github.GithubUser
+import com.eduardosmatheus.githubtagsserver.repositories.GithubRepoTagsRepository
 import com.eduardosmatheus.githubtagsserver.repositories.UsersRepository
 import com.eduardosmatheus.githubtagsserver.security.JwtTokenGenerator
 import com.eduardosmatheus.githubtagsserver.security.UserClaims
@@ -21,6 +23,9 @@ class GithubService {
 
     @Autowired
     private lateinit var usersRepository: UsersRepository
+
+    @Autowired
+    private lateinit var githubRepoTagsRepository: GithubRepoTagsRepository
 
     fun authorize(code: String): String {
         val userClaims = getClaims(code)
@@ -86,5 +91,19 @@ class GithubService {
         val response = client.postForEntity(url.toUriString(), null, JsonNode::class.java)
 
         return response.body!!
+    }
+
+    fun getUserStarredRepositories(userToken: String): List<GithubRepository> {
+        val apiClient = RestTemplateBuilder()
+            .defaultHeader("Authorization", "token $userToken")
+            .defaultHeader("Accept", "application/vnd.github.v3+json")
+            .rootUri(githubApiBaseURL)
+            .build()
+        val response = apiClient.getForEntity("/starred", Array<GithubRepository>::class.java)
+        val starredRepos = response.body ?: emptyArray()
+        return starredRepos.map { repo ->
+            val tags = githubRepoTagsRepository.findByRepositoryId(repo.id)
+            repo.copy(tags = tags)
+        }
     }
 }
