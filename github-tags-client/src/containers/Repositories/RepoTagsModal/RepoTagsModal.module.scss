@@ -1,0 +1,9 @@
+.AvailableTags, .RepositoryTags {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+.AvailableTag, .RepositoryTag {
+  margin: auto 5px;
+  cursor: pointer;
+}

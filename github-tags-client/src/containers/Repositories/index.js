@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 import api from '../../api';
 import RepositoryList from './RepositoryList';
 import Styles from './Repositories.module.scss';
+import RepoTagsModal from './RepoTagsModal';
 
 export default function Repositories() {
   const handleLoadRepositories = async () => {
@@ -23,10 +24,24 @@ export default function Repositories() {
 
   const [repositories, setRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showTagsModal, setShowTagsModal] = useState(false);
+  const [currentRepository, setCurrentRepository] = useState(null);
+
+  const onTagsEdit = (selected) => {
+    setCurrentRepository(selected);
+    setShowTagsModal(!showTagsModal);
+  };
 
   return (
-    <div className={Styles.RepositoriesContainer}>
-      <RepositoryList {...{ isLoading, repositories }} />
-    </div>
+    <>
+      <div className={Styles.RepositoriesContainer}>
+        <RepositoryList {...{ isLoading, repositories, onTagsEdit }} />
+      </div>
+      <RepoTagsModal
+        show={showTagsModal}
+        onHide={() => onTagsEdit(null)}
+        repository={currentRepository}
+      />
+    </>
   )
 }
