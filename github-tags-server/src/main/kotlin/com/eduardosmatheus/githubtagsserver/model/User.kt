@@ -12,14 +12,11 @@ data class User(
     @Column
     val email: String,
     @Column
-    val password: String,
-    @Column
     val fullName: String,
     @Column
     val username: String,
     @Column
     val avatarURL: String,
-    @JsonInclude
     @Transient
     val githubClaims: UserClaims? = null
 )

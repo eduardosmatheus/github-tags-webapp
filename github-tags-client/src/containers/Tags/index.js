@@ -1,69 +1,72 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Button,
-  FormControl,
-  InputGroup
-} from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faWindowClose, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { toast } from 'react-toastify';
 import Styles from './Tags.module.scss';
 import { withUser } from '../../components/UserProvider';
+import TagForm from './TagForm';
+import api from '../../api';
 
-function Tags() {
+function Tag({ name }) {
+  return (
+    <div className={Styles.Tag}>
+      {name}
+      {' '}
+      <FontAwesomeIcon
+        className={Styles.DeleteTagButton}
+        icon={faWindowClose}
+      />
+    </div>
+  )
+}
+
+function Tags({ user }) {
+  useEffect(() => {
+    handleLoadTags();
+  }, []);
+
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
   const handleLoadTags = async () => {
     setIsLoading(true);
     try {
-      
+      const { data: tags } = await api.get('/api/tags');
+      setData(tags);
     } catch (error) {
-      
+      toast.error(error.message);
     } finally {
       setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    handleLoadTags();
-  }, []);
-
-  const [data, setData] = useState([
-    { id: 1, name: 'react' },
-    { id: 2, name: 'java' },
-    { id: 3, name: 'linux' },
-    { id: 4, name: 'js' },
-  ]);
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [name, setName] = useState('');
+  const handleSaveTag = async (name) => {
+    setIsSaving(true);
+    try {
+      const { data: savedTag } = await api.post('/api/tags', { name, user });
+      setData([
+        ...data,
+        savedTag
+      ].sort((a, b) => a.name - b.name));
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   return (
     <div className={Styles.TagsContainer}>
       <div className={Styles.TagForm}>
-        <InputGroup>
-          <FormControl
-            size="lg"
-            name="name"
-            value={name}
-            placeholder="Informe um texto de sua preferência..."
-            onChange={e => setName(e.target.value)}
-          />
-          <InputGroup.Append>
-            <Button variant="success">
-              <FontAwesomeIcon icon={faSave} size="2x" />
-            </Button>
-          </InputGroup.Append>
-        </InputGroup>
+        <TagForm
+          isSaving={isSaving}
+          onSubmit={handleSaveTag}
+        />
       </div>
       <div className={Styles.TagsListContent}>
-        {data.map(({ id, name }) => (
-          <div className={Styles.Tag}>
-            {name}
-            {' '}
-            <FontAwesomeIcon
-              className={Styles.DeleteTagButton}
-              icon={faWindowClose}
-            />
-          </div>
-        ))}
+        {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
+        {!isLoading && data.map(Tag)}
       </div>
     </div>
   )

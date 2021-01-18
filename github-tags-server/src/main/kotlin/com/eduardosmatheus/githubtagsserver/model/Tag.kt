@@ -9,5 +9,7 @@ data class Tag(
 	val id: Int,
 	@Column
 	val name: String,
+	@OneToOne
+	@JoinColumn(name = "user_id")
 	val user: User
 )
