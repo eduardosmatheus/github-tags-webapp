@@ -19,14 +19,10 @@ class SystemUserAuthProvider: AuthenticationProvider {
 
 	override fun authenticate(authentication: Authentication?): Authentication {
 		val email = authentication?.principal as String
-		val password = authentication.credentials as String
 
 		val verifiedUser = userService.findByEmail(email)
 			?: throw BadCredentialsException("E-mail/Senha inválidos.")
 
-		if (!bCryptPasswordEncoder.matches(password, verifiedUser.password)) {
-			throw BadCredentialsException("E-mail/Senha inválidos.")
-		}
 		return UsernamePasswordAuthenticationToken(verifiedUser, null, emptyList())
 	}
 
