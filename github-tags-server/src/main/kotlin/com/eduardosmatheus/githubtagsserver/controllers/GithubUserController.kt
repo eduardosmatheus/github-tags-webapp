@@ -19,6 +19,6 @@ class GithubUserController {
 	fun getStarredRepos(authentication: Authentication): Array<GithubRepository> {
 		val currentUser = authentication.principal as Map<*, *>
 		val githubClaims = currentUser["githubClaims"] as Map<*, *>
-		return githubAPI.getUserStarredRepositories(githubClaims["githubAccessToken"]!!.toString())
+		return githubAPI.getUserStarredRepositories(githubClaims["access_token"]!!.toString())
 	}
 }

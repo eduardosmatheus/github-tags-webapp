@@ -24,7 +24,7 @@ class GithubService {
 
     fun authorize(code: String): String {
         val userClaims = getClaims(code)
-        val currentGithubUser = getCurrentUser(userClaims.githubAccessToken)
+        val currentGithubUser = getCurrentUser(userClaims.access_token)
             ?: throw BadCredentialsException("")
         val verifiedUser =
             usersRepository.findByEmail(currentGithubUser.email)
@@ -32,7 +32,6 @@ class GithubService {
                 User(
                     id = null,
                     email = currentGithubUser.email,
-                    password = "",
                     fullName = currentGithubUser.name,
                     username = currentGithubUser.login,
                     avatarURL = currentGithubUser.avatar_url

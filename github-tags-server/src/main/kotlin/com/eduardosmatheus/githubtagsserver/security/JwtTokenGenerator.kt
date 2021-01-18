@@ -9,7 +9,7 @@ object JwtTokenGenerator {
 	fun generate(verifiedUser: User): String {
 		val algorithm = Algorithm.HMAC256("secret")
 		val githubClaimsMap = mapOf(
-			"githubAccessToken" to verifiedUser.githubClaims?.githubAccessToken,
+			"access_token" to verifiedUser.githubClaims?.access_token,
 			"scope" to verifiedUser.githubClaims?.scope,
 			"token_type" to verifiedUser.githubClaims?.token_type
 		)

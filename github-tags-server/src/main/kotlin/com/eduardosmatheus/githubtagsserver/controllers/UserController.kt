@@ -23,6 +23,4 @@ class UserController {
     @GetMapping("/current")
     fun getCurrentUser(authentication: Authentication) = authentication.principal
 
-    @PostMapping
-    fun signUp(@RequestBody user: User) = userService.signUp(user)
 }
