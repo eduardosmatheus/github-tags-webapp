@@ -1,16 +1,54 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import './App.scss';
-import Home from './containers/Home';
-import Login from './containers/Login';
+import AppNavbar from './components/AppNavbar';
+import { withUser } from './components/UserProvider';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Repositories from './pages/Repositories';
+import Tags from './pages/Tags';
 
-function App() {
-  return (
-    <Switch>
-      <Route path="/login" component={Login} />
-      <Route path="/" component={Home} />
-    </Switch>
-  );
+class App extends React.Component {
+  componentDidMount() {
+    const { history, location, claimAccess, isLogged } = this.props;
+    if (!isLogged && location && !location.search) {
+      history.push('/login');
+      return;
+    } else if (!isLogged && location && location.search) {
+      const parameters = new URLSearchParams(location.search);
+      const code = parameters.get('code');
+      if (!code) {
+        this.handleLogout();
+      } else {
+        claimAccess(code);
+      }
+    } else if (isLogged && location && location.search) {
+      history.push('/repositories');
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { user, history } = this.props;
+    if (prevProps.user !== user && user) {
+      history.replace('/repositories');
+    }
+  }
+  render() {
+    const { history } = this.props;
+    return (
+      <div className="main-app-container">
+        <AppNavbar {...{ history }} />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/repositories" exact component={Repositories} />
+          <Route path="/tags" exact component={Tags} />
+        </Switch>
+        <ToastContainer />
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withRouter(withUser(App));
