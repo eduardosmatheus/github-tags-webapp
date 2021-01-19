@@ -1,10 +1,11 @@
 import React from 'react';
 import { Badge, Button, Card } from 'react-bootstrap';
-import { faSpinner, faTags } from '@fortawesome/free-solid-svg-icons';
+import { faTags } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Styles from './RepositoryList.module.scss';
+import Styles from './index.module.scss';
 
-export function Repository({ name, full_name, html_url, description, tags, onTagsEdit }) {
+export default function Repository({ onTagsEdit, ...rest }) {
+  const { name, full_name, html_url, description, tags } = rest;
   return (
     <div className={Styles.Repository} data-testid={`repository-${name}`}>
       <Card.Header>
@@ -19,29 +20,10 @@ export function Repository({ name, full_name, html_url, description, tags, onTag
             </Badge>
           ))}
         </div>
-        <Button variant="outline-success" onClick={onTagsEdit}>
+        <Button variant="outline-success" onClick={() => onTagsEdit(rest)}>
           <FontAwesomeIcon icon={faTags} />
         </Button>
       </Card.Body>
-    </div>
-  )
-}
-
-export default function RepositoryList({ isLoading, repositories, onTagsEdit }) {
-  return (
-    <div className={Styles.RepositoryListContainer}>
-      {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
-      {!isLoading && (
-        <div className={Styles.RepositoryListContent}>
-          {repositories.map(repo => (
-            <Repository
-              key={repo.id}
-              {...repo}
-              onTagsEdit={() => onTagsEdit(repo)}
-            />
-          ))}
-        </div>
-      )}
     </div>
   )
 }
