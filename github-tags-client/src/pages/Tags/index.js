@@ -11,7 +11,9 @@ import { getMessageFromRequest } from '../../utils/response';
 function Tag({ id, name, onDelete }) {
   return (
     <div className={Styles.Tag}>
-      {name}
+      <span className={Styles.TagName}>
+        {name}
+      </span>
       {' '}
       <FontAwesomeIcon
         className={Styles.DeleteTagButton}
