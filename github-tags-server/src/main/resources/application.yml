@@ -10,3 +10,9 @@ spring:
 server:
   error:
     include-message: always
+com:
+  tags-server:
+    github:
+      client-id: # Your Client ID Here
+      client-secret: # Your Secret Here
+      user-base-url: https://api.github.com/user
