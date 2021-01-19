@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import api from '../../api';
-import RepositoryList from './RepositoryList';
+import { Repository } from './RepositoryList';
 import Styles from './Repositories.module.scss';
 import RepoTagsModal from './RepoTagsModal';
 import { getMessageFromRequest } from '../../utils/response';
+import FuzzyFinder from '../../components/FuzzyFinder';
 
 export default function Repositories() {
   const handleLoadRepositories = async () => {
@@ -79,10 +80,22 @@ export default function Repositories() {
     }
   };
 
+  const mapRepositoryTagsNames = (row) => {
+    return row.tags.map(({ tag }) => tag.name);
+  };
+
   return (
     <>
       <div className={Styles.RepositoriesContainer}>
-        <RepositoryList {...{ isLoading, repositories, onTagsEdit }} />
+        <FuzzyFinder
+          data={repositories}
+          rowRenderer={row => (
+            <Repository {...{ ...row, onTagsEdit }} />
+          )}
+          keyExtractor={row => row.id}
+          placeholder="Informe uma tag (ou parte dela)..."
+          getHint={mapRepositoryTagsNames}
+        />
       </div>
       <RepoTagsModal
         show={showTagsModal}
