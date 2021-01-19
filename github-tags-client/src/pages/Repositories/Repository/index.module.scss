@@ -7,22 +7,26 @@
 .RepositoryContent {
   width: 100%;
   display: inline-flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
 }
 
 .RepoDescription {
-  width: 60%;  
+  width: 50%;
+  font-size: 0.8em;  
 }
 
 .RepositoryTagsList {
-  margin-left: 5px;
+  margin: 0 15px;
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  width: 120px;
+  min-width: 20%;
+  max-width: 25%;
   max-height: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
