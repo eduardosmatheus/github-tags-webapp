@@ -1,16 +1,24 @@
 .FuzzyFinderContainer {
   width: 50vw;
   height: 60%;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+.LoadingResults {
+  justify-self: center;
+  align-self: center;
+}
+
 .FuzzyFinderResults {
   width: 100%;
   height: 100%;
   border: 1px solid grey;
+  padding: 20px;
+  
   display: flex;
   flex-direction: column;
   overflow-y: auto;

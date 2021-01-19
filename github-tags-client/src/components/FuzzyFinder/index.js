@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FormControl } from 'react-bootstrap';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Styles from './index.module.scss';
 
 export default function FuzzyFinder({
@@ -7,7 +9,8 @@ export default function FuzzyFinder({
   rowRenderer: RowRenderer,
   keyExtractor,
   getHint,
-  placeholder
+  placeholder,
+  isLoading
 }) {
   const [searchHint, setSearchHint] = useState('');
   const [displayData, setDisplayData] = useState(data);
@@ -46,7 +49,15 @@ export default function FuzzyFinder({
         className={Styles.FuzzyFinderResults}
         data-testid="fuzzy-finder-results"
       >
-        {(!searchHint ? data : displayData).map(item => (
+        {isLoading && (
+          <FontAwesomeIcon
+            className={Styles.LoadingResults}
+            icon={faSpinner}
+            spin
+            size="6x"
+          />
+        )}
+        {!isLoading && (!searchHint ? data : displayData).map(item => (
           <RowRenderer key={keyExtractor(item)} {...item} />
         ))}
       </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import api from '../../api';
-import { Repository } from './RepositoryList';
+import Repository from './Repository';
 import Styles from './Repositories.module.scss';
 import RepoTagsModal from './RepoTagsModal';
 import { getMessageFromRequest } from '../../utils/response';
@@ -89,6 +89,7 @@ export default function Repositories() {
       <div className={Styles.RepositoriesContainer}>
         <FuzzyFinder
           data={repositories}
+          isLoading={isLoading}
           rowRenderer={row => (
             <Repository {...{ ...row, onTagsEdit }} />
           )}
