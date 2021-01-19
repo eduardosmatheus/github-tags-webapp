@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify';
 import './App.scss';
 import AppNavbar from './components/AppNavbar';
 import { withUser } from './components/UserProvider';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Repositories from './pages/Repositories';
 import Tags from './pages/Tags';
@@ -35,12 +34,10 @@ class App extends React.Component {
     }
   }
   render() {
-    const { history } = this.props;
     return (
       <div className="main-app-container">
-        <AppNavbar {...{ history }} />
+        <AppNavbar />
         <Switch>
-          <Route path="/" exact component={Home} />
           <Route path="/login" exact component={Login} />
           <Route path="/repositories" exact component={Repositories} />
           <Route path="/tags" exact component={Tags} />
