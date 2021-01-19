@@ -13,7 +13,7 @@ export function Repository({ name, full_name, html_url, description, tags, onTag
       <Card.Body className={Styles.RepositoryContent}>
         <Card.Text className={Styles.RepoDescription}>{description}</Card.Text>
         <div className={Styles.RepositoryTagsList}>
-          {tags.map((repoTag, idx) => (
+          {tags && tags.map((repoTag, idx) => (
             <Badge key={idx} variant="primary" className={Styles.RepositoryTag}>
               {repoTag.tag.name}
             </Badge>

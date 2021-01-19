@@ -49,7 +49,9 @@ export default function RepoTagsModal({ show, onHide, repository, onAddTag, onRe
         <div className={Styles.AvailableTags}>
           {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
           {!isLoading && tags.map(tag => {
-            const current = repository && repository.tags.find(t => t.tag.id === tag.id);
+            const current = repository
+              && repository.tags
+              && repository.tags.find(t => t.tag.id === tag.id);
             return (
               <RepositoryTag
                 key={tag.id}
