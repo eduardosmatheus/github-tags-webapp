@@ -14,7 +14,7 @@ export default function FuzzyFinder({
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
-    setDisplayData(!filteredData.length ? data : filteredData);
+    setDisplayData(filteredData);
   }, [filteredData]);
 
   const handleSearchHint = (hint) => {
@@ -46,7 +46,7 @@ export default function FuzzyFinder({
         className={Styles.FuzzyFinderResults}
         data-testid="fuzzy-finder-results"
       >
-        {displayData.map(item => (
+        {(!searchHint ? data : displayData).map(item => (
           <RowRenderer key={keyExtractor(item)} {...item} />
         ))}
       </div>
