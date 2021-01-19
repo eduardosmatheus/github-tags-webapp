@@ -1,0 +1,549 @@
+[
+   {
+      "id":892275,
+      "name":"retrofit",
+      "full_name":"square/retrofit",
+      "html_url":"https://github.com/square/retrofit",
+      "description":"A type-safe HTTP client for Android and the JVM",
+      "tags":[
+         {
+            "id":60,
+            "repositoryId":892275,
+            "tag":{
+               "id":21,
+               "name":"web-dev",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":65,
+            "repositoryId":892275,
+            "tag":{
+               "id":48,
+               "name":"java",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":66,
+            "repositoryId":892275,
+            "tag":{
+               "id":19,
+               "name":"react",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":67,
+            "repositoryId":892275,
+            "tag":{
+               "id":5,
+               "name":"javascript",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":68,
+            "repositoryId":892275,
+            "tag":{
+               "id":3,
+               "name":"kotlin",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":69,
+            "repositoryId":892275,
+            "tag":{
+               "id":61,
+               "name":"back-end",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":71939872,
+      "name":"blueprint",
+      "full_name":"palantir/blueprint",
+      "html_url":"https://github.com/palantir/blueprint",
+      "description":"A React-based UI toolkit for the web",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":187225547,
+      "name":"datetimepicker",
+      "full_name":"react-native-datetimepicker/datetimepicker",
+      "html_url":"https://github.com/react-native-datetimepicker/datetimepicker",
+      "description":"React Native date & time picker component for iOS, Android and Windows",
+      "tags":[
+         {
+            "id":17,
+            "repositoryId":187225547,
+            "tag":{
+               "id":5,
+               "name":"javascript",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":90054433,
+      "name":"bzaar-api",
+      "full_name":"dapx/bzaar-api",
+      "html_url":"https://github.com/dapx/bzaar-api",
+      "description":"Bzaar is an application for smartphones to small markets buying and selling clothes. It's the rest api created with elixir and phoenix framework.",
+      "tags":[
+         {
+            "id":18,
+            "repositoryId":90054433,
+            "tag":{
+               "id":5,
+               "name":"javascript",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":48764652,
+      "name":"react-native-maps",
+      "full_name":"react-native-maps/react-native-maps",
+      "html_url":"https://github.com/react-native-maps/react-native-maps",
+      "description":"React Native Mapview component for iOS + Android",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":9754983,
+      "name":"tutorials",
+      "full_name":"eugenp/tutorials",
+      "html_url":"https://github.com/eugenp/tutorials",
+      "description":"Just Announced - \"Learn Spring Security OAuth\": ",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":2325298,
+      "name":"linux",
+      "full_name":"torvalds/linux",
+      "html_url":"https://github.com/torvalds/linux",
+      "description":"Linux kernel source tree",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":23550423,
+      "name":"DS4Windows",
+      "full_name":"Jays2Kings/DS4Windows",
+      "html_url":"https://github.com/Jays2Kings/DS4Windows",
+      "description":"Like those other ds4tools, but sexier",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":35848897,
+      "name":"react-markdown",
+      "full_name":"remarkjs/react-markdown",
+      "html_url":"https://github.com/remarkjs/react-markdown",
+      "description":"Markdown component for React",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":72464350,
+      "name":"eb-java-scorekeep",
+      "full_name":"aws-samples/eb-java-scorekeep",
+      "html_url":"https://github.com/aws-samples/eb-java-scorekeep",
+      "description":"RESTful web API in Java with Spring that provides an HTTP interface for creating and managing game sessions and users.",
+      "tags":[
+         {
+            "id":40,
+            "repositoryId":72464350,
+            "tag":{
+               "id":21,
+               "name":"web-dev",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":42,
+            "repositoryId":72464350,
+            "tag":{
+               "id":3,
+               "name":"kotlin",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         },
+         {
+            "id":54,
+            "repositoryId":72464350,
+            "tag":{
+               "id":48,
+               "name":"java",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":21413198,
+      "name":"immutable-js",
+      "full_name":"immutable-js/immutable-js",
+      "html_url":"https://github.com/immutable-js/immutable-js",
+      "description":"Immutable persistent data collections for Javascript which increase efficiency and simplicity.",
+      "tags":[
+         {
+            "id":55,
+            "repositoryId":21413198,
+            "tag":{
+               "id":5,
+               "name":"javascript",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":24560307,
+      "name":"babel",
+      "full_name":"babel/babel",
+      "html_url":"https://github.com/babel/babel",
+      "description":"\uD83D\uDC20 Babel is a compiler for writing next generation JavaScript.",
+      "tags":[
+         {
+            "id":47,
+            "repositoryId":24560307,
+            "tag":{
+               "id":21,
+               "name":"web-dev",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":31770305,
+      "name":"react-split-pane",
+      "full_name":"tomkp/react-split-pane",
+      "html_url":"https://github.com/tomkp/react-split-pane",
+      "description":"React split-pane component",
+      "tags":[
+         {
+            "id":45,
+            "repositoryId":31770305,
+            "tag":{
+               "id":19,
+               "name":"react",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":3678731,
+      "name":"webpack",
+      "full_name":"webpack/webpack",
+      "html_url":"https://github.com/webpack/webpack",
+      "description":"A bundler for javascript and friends. Packs many modules into a few bundled assets. Code Splitting allows for loading parts of the application on demand. Through \"loaders\", modules can be CommonJs, AMD, ES6 modules, CSS, Images, JSON, Coffeescript, LESS, ... and your custom stuff.",
+      "tags":[
+         {
+            "id":43,
+            "repositoryId":3678731,
+            "tag":{
+               "id":5,
+               "name":"javascript",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":19872456,
+      "name":"react-router",
+      "full_name":"ReactTraining/react-router",
+      "html_url":"https://github.com/ReactTraining/react-router",
+      "description":"Declarative routing for React",
+      "tags":[
+         {
+            "id":44,
+            "repositoryId":19872456,
+            "tag":{
+               "id":19,
+               "name":"react",
+               "user":{
+                  "id":2,
+                  "email":"matheus-edu@outlook.com",
+                  "fullName":"Matheus Eduardo",
+                  "username":"eduardosmatheus",
+                  "avatarURL":"https://avatars0.githubusercontent.com/u/12476413?v=4",
+                  "githubClaims":null
+               }
+            }
+         }
+      ]
+   },
+   {
+      "id":31764022,
+      "name":"react-data-grid",
+      "full_name":"adazzle/react-data-grid",
+      "html_url":"https://github.com/adazzle/react-data-grid",
+      "description":"Excel-like grid component built with React, with editors, keyboard navigation, copy & paste, and the like",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":36535156,
+      "name":"redux",
+      "full_name":"reduxjs/redux",
+      "html_url":"https://github.com/reduxjs/redux",
+      "description":"Predictable state container for JavaScript apps",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":52113921,
+      "name":"draft-js",
+      "full_name":"facebook/draft-js",
+      "html_url":"https://github.com/facebook/draft-js",
+      "description":"A React framework for building text editors.",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":99761907,
+      "name":"react-beautiful-dnd",
+      "full_name":"atlassian/react-beautiful-dnd",
+      "html_url":"https://github.com/atlassian/react-beautiful-dnd",
+      "description":"Beautiful and accessible drag and drop for lists with React",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":132471408,
+      "name":"orb",
+      "full_name":"igor-trbic/orb",
+      "html_url":"https://github.com/igor-trbic/orb",
+      "description":"Pivot table javascript library",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":26485421,
+      "name":"orb",
+      "full_name":"nnajm/orb",
+      "html_url":"https://github.com/nnajm/orb",
+      "description":"Pivot table javascript library",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":6498492,
+      "name":"javascript",
+      "full_name":"airbnb/javascript",
+      "html_url":"https://github.com/airbnb/javascript",
+      "description":"JavaScript Style Guide",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":35685034,
+      "name":"react-native-vector-icons",
+      "full_name":"oblador/react-native-vector-icons",
+      "html_url":"https://github.com/oblador/react-native-vector-icons",
+      "description":"Customizable Icons for React Native with support for NavBar/TabBar, image source and full styling.",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":84590465,
+      "name":"vagas",
+      "full_name":"react-brasil/vagas",
+      "html_url":"https://github.com/react-brasil/vagas",
+      "description":"Espaço para divulgação de vagas relacionadas com React",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":10270250,
+      "name":"react",
+      "full_name":"facebook/react",
+      "html_url":"https://github.com/facebook/react",
+      "description":"A declarative, efficient, and flexible JavaScript library for building user interfaces.",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":4454793,
+      "name":"MuseScore",
+      "full_name":"musescore/MuseScore",
+      "html_url":"https://github.com/musescore/MuseScore",
+      "description":"MuseScore is an open source and free music notation software. For support, contribution, bug reports, visit MuseScore.org. Fork and make pull requests!",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":51001484,
+      "name":"vagas",
+      "full_name":"frontendbr/vagas",
+      "html_url":"https://github.com/frontendbr/vagas",
+      "description":":microscope: Espaço para divulgação de vagas para front-enders.",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":3432266,
+      "name":"kotlin",
+      "full_name":"JetBrains/kotlin",
+      "html_url":"https://github.com/JetBrains/kotlin",
+      "description":"The Kotlin Programming Language",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":95395370,
+      "name":"nnabla",
+      "full_name":"sony/nnabla",
+      "html_url":"https://github.com/sony/nnabla",
+      "description":"Neural Network Libraries",
+      "tags":[
+         
+      ]
+   },
+   {
+      "id":4333252,
+      "name":"guake",
+      "full_name":"Guake/guake",
+      "html_url":"https://github.com/Guake/guake",
+      "description":"Drop-down terminal for GNOME",
+      "tags":[
+         
+      ]
+   }
+]
