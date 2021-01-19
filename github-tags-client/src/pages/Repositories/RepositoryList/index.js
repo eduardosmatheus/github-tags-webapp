@@ -34,7 +34,11 @@ export default function RepositoryList({ isLoading, repositories, onTagsEdit }) 
       {!isLoading && (
         <div className={Styles.RepositoryListContent}>
           {repositories.map(repo => (
-            <Repository {...repo} onTagsEdit={() => onTagsEdit(repo)} />
+            <Repository
+              key={repo.id}
+              {...repo}
+              onTagsEdit={() => onTagsEdit(repo)}
+            />
           ))}
         </div>
       )}

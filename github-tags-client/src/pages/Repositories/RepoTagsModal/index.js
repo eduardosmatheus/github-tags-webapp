@@ -52,6 +52,7 @@ export default function RepoTagsModal({ show, onHide, repository, onAddTag, onRe
             const current = repository && repository.tags.find(t => t.tag.id === tag.id);
             return (
               <RepositoryTag
+                key={tag.id}
                 name={tag.name}
                 checked={!!current}
                 onAdd={() => onAddTag({ repositoryId: repository.id, tag })}

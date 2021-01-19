@@ -79,7 +79,11 @@ function Tags({ user }) {
       <div className={Styles.TagsListContent}>
         {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
         {!isLoading && data.map(item => (
-          <Tag {...item} onDelete={handleRemoveTag} />
+          <Tag
+            key={item.id}
+            {...item}
+            onDelete={handleRemoveTag}
+          />
         ))}
       </div>
     </div>
