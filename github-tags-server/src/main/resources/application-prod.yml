@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/github-tags-db
+    username: postgres
+    password: postgres
+server:
+  error:
+    include-message: always
+com:
+  tags-server:
+    github:
+      user-base-url: https://api.github.com/user
