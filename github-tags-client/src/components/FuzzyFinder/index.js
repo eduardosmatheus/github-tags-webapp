@@ -20,8 +20,12 @@ export default function FuzzyFinder({
   const handleSearchHint = (hint) => {
     setSearchHint(hint);
     const filtered = data.filter(item => {
-      const dataStr = getHint(item);
-      return dataStr.includes(hint);;
+      const data = getHint(item);
+      if (data instanceof Array) {
+        const innerResults = data.filter(item => item.includes(hint));
+        return !!innerResults.length;
+      }
+      return data.includes(hint);
     });
     setFilteredData(filtered);
   };
