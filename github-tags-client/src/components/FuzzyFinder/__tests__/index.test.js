@@ -5,13 +5,18 @@ import FuzzyFinder from '../index';
 import reposMock from './reposMock.json';
 import { Repository } from '../../../pages/Repositories/RepositoryList';
 
-test('shows the whole list when nothing is typed', () => {
-  render(
-    <FuzzyFinder
-      data={reposMock}
-      rowRenderer={Repository}
-      keyExtractor={row => row.id}
-    />
-  );
-  expect(screen.queryByText('retrofit')).toBeInTheDocument();  
+const CONTAINER_ID = 'fuzzy-finder-container';
+const testPlaceholder = 'Informe uma tag (ou parte dela)';
+
+const mockProps = {
+  data: reposMock,
+  rowRenderer: Repository,
+  keyExtractor: row => row.id,
+  placeholder: testPlaceholder,
+};
+
+test('renders the component without errors', () => {
+  render(<FuzzyFinder {...mockProps} />);
+  expect(screen.getByTestId(CONTAINER_ID)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(testPlaceholder)).toBeInTheDocument();  
 });

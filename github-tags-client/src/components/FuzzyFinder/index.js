@@ -6,7 +6,8 @@ export default function FuzzyFinder({
   data,
   rowRenderer: RowRenderer,
   keyExtractor,
-  getHint
+  getHint,
+  placeholder
 }) {
   const [searchHint, setSearchHint] = useState('');
   const [filteredData, setFilteredData] = useState(null);
@@ -23,14 +24,21 @@ export default function FuzzyFinder({
     ? filteredData : data;
 
   return (
-    <div className={Styles.FuzzyFinderContainer}>
+    <div
+      className={Styles.FuzzyFinderContainer}
+      data-testid="fuzzy-finder-container"
+    >
       <FormControl
         type="text"
         name="searchHint"
+        placeholder={placeholder}
         value={searchHint}
         onChange={e => handleSearchHint(e.target.value)}
       />
-      <div className={Styles.FuzzyFinderResults}>
+      <div
+        className={Styles.FuzzyFinderResults}
+        data-testid="fuzzy-finder-results"
+      >
         {displayList.map(item => (
           <RowRenderer key={keyExtractor(item)} {...item} />
         ))}
