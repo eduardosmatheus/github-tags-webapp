@@ -4,9 +4,9 @@ import { faSpinner, faTags } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Styles from './RepositoryList.module.scss';
 
-export function Repository({ full_name, html_url, description, tags, onTagsEdit }) {
+export function Repository({ name, full_name, html_url, description, tags, onTagsEdit }) {
   return (
-    <div className={Styles.Repository}>
+    <div className={Styles.Repository} data-testid={`repository-${name}`}>
       <Card.Header>
         <a href={html_url} target="_blank">{full_name}</a>
       </Card.Header>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormControl } from 'react-bootstrap';
 import Styles from './index.module.scss';
 
@@ -10,18 +10,21 @@ export default function FuzzyFinder({
   placeholder
 }) {
   const [searchHint, setSearchHint] = useState('');
-  const [filteredData, setFilteredData] = useState(null);
+  const [displayData, setDisplayData] = useState(data);
+  const [filteredData, setFilteredData] = useState([]);
+
+  useEffect(() => {
+    setDisplayData(!filteredData.length ? data : filteredData);
+  }, [filteredData]);
 
   const handleSearchHint = (hint) => {
     setSearchHint(hint);
     const filtered = data.filter(item => {
-      return getHint(item).toString().includes(hint);
+      const dataStr = getHint(item);
+      return dataStr.includes(hint);;
     });
     setFilteredData(filtered);
   };
-
-  const displayList = searchHint && filteredData && filteredData.length
-    ? filteredData : data;
 
   return (
     <div
@@ -39,7 +42,7 @@ export default function FuzzyFinder({
         className={Styles.FuzzyFinderResults}
         data-testid="fuzzy-finder-results"
       >
-        {displayList.map(item => (
+        {displayData.map(item => (
           <RowRenderer key={keyExtractor(item)} {...item} />
         ))}
       </div>
