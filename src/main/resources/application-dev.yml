@@ -13,6 +13,6 @@ server:
 com:
   tags-server:
     github:
-      client-id: # Your Client ID Here
-      client-secret: # Your Secret Here
+      client-id: b34d2a6fc9da4d853f0a # Your Client ID Here
+      client-secret: bf7914d3bce7e9a5cb6ec9eb9126cc6eeafc8bc3 # Your Secret Here
       user-base-url: https://api.github.com/user

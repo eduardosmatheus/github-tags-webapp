@@ -7,7 +7,7 @@ import javax.persistence.*
 data class Tag(
 	@Id @GeneratedValue
 	val id: Int,
-	@Column
+	@Column(unique = true)
 	val name: String,
 	@OneToOne
 	@JoinColumn(name = "user_id")
