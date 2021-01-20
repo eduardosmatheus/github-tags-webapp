@@ -38,7 +38,7 @@ class GithubService {
     fun authorize(code: String): String {
         val userClaims = getClaims(code)
         val currentGithubUser = getCurrentUser(userClaims.access_token)
-            ?: throw BadCredentialsException("")
+            ?: throw BadCredentialsException("Usuário não encontrado.")
         val verifiedUser =
             usersRepository.findByEmail(currentGithubUser.email)
             ?: usersRepository.save(
