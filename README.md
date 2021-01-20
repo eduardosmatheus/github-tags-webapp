@@ -6,6 +6,25 @@
 
 Precisamos poder agrupar, utilizando tags, os repositórios marcados com Estrela no Github, a fim de consultá-los posteriormente por essas mesmas tags.
 
+# [Acesse esta aplicação executada em produção](https://matheus-github-tags-client.netlify.app).
+
+Este projeto utiliza as seguintes tecnologias:
+
+* Banco de dados: PostgreSQL
+* Back-end:
+  * Spring Boot
+    * Spring Data JPA
+    * Spring Security
+  * Kotlin
+* Front-end:
+  * ReactJS
+    * Hooks
+    * Context API
+  * React Router
+  * SASS
+  * Javascript
+
+
 # Como usar este projeto
 
 ## 1. Registrando uma aplicação OAuth no Github
