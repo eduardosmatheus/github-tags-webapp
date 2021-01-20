@@ -42,6 +42,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         configuration.allowedOrigins = listOf(
             "http://localhost:3000",
             "https://localhost:3000",
+            "https://matheus-github-tags-client.netlify.app"
         )
         configuration.allowedMethods = listOf("POST", "PUT", "OPTIONS", "GET", "DELETE")
         configuration.maxAge = 3600
