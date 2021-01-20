@@ -9,7 +9,7 @@ export default function Repository({ onTagsEdit, ...rest }) {
   return (
     <div className={Styles.Repository} data-testid={`repository-${name}`}>
       <Card.Header>
-        <a href={html_url} target="_blank">{full_name}</a>
+        <a href={html_url} target="_blank" rel="noreferrer">{full_name}</a>
       </Card.Header>
       <Card.Body className={Styles.RepositoryContent}>
         <Card.Text className={Styles.RepoDescription}>{description}</Card.Text>
