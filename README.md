@@ -1,45 +1,121 @@
 # PROJETO DE SELEÇÃO
 
-Ao conhecer uma pessoa que está aplicando para a Magrathea gostamos de ter uma conversa sobre código. Afinal, escrever, ler e discutir sobre código faz parte da nossa rotina diária de trabalho.
+[![Netlify Status](https://api.netlify.com/api/v1/badges/9eab1ae2-909e-43e2-979a-9f88675d1e22/deploy-status)](https://app.netlify.com/sites/matheus-github-tags-client/deploys)
 
-Você pode implementar o projeto usando qualquer linguagem de sua preferência. Lembre-se: use a linguagem com a qual você tem mais familiaridade.
+# Motivação
 
-## O QUE VAMOS AVALIAR
+Precisamos poder agrupar, utilizando tags, os repositórios marcados com Estrela no Github, a fim de consultá-los posteriormente por essas mesmas tags.
 
-Queremos avaliar sua capacidade de fornecer um produto simples com documentação suficiente para outros desenvolvedores contribuírem ativamente para o projeto posteriormente. Na entrevista vamos prestar atenção nos seguintes itens:
+# Como usar este projeto
 
-* Comunicação na revisão do código presencial;
-* Argumentos sobre desafios enfrentados e escolhas realizadas na implementação;
+## 1. Registrando uma aplicação OAuth no Github
 
-Ao revisar seu código vamos prestar atenção nos seguintes itens:
+Primeiramente, [é necessário registrar uma aplicação OAuth no seu Github](https://github.com/settings/applications/new).
 
-* Organização do código;
-* Código bem escrito, limpo e coeso;
-* Arquitetura e princípios de desenvolvimento;
-* Documentação (README.md) com instruções claras para reproduzir o projeto;
-* Uso adequado de versionamento do código em git;
-* Uso de testes automatizados;
-* Deploy da aplicação: recomendamos Heroku por ter plano free;
-* O design da API RESTful é implementado, usando corretamente os verbos HTTP e o código de status apropriado;
-* Uso adequado de HTML5, CSS3 e JavaScript em um front-end minimamente estruturado.
+Ao abrir a página acima e definir os campos iniciais, o campo **"Authorization Callback URL"** deve ser configurado como:
 
-Caso você não se sinta confortável com algum desses itens, tudo bem, apenas nos fale sobre isso, ok? O objetivo aqui não é você programar de graça para nós, nem te fazer perder tempo com algo irrelevante. Nosso objetivo aqui é ter um código sobre o qual podemos conversar. Como você deve ter notado, a gente preza muito por colaboração, trabalho em time e comunicação. O objetivo aqui é ter, minimamente, essa experiência com você.
+* `http://localhost:3000` (Para ambiente de desenvolvimento somente);
 
-Respeite o seu nível de conhecimento e experiência, o importante é você saber dizer o motivo das suas escolhas. Se você tiver qualquer dúvida, por favor, entre em contato com a gente. Se quiser uma revisão no seu código em um Pull Request no Github, pode nos chamar. Estamos disponíveis para te ajudar a finalizar esse processo.
-Ah, por último. Você acha que consegue nos responder em quanto tempo? Duas semanas é ok para você?
+* Para o ambiente de produção, informe a URL definida no seu ambiente _cloud_. 
 
-## IDEIAS DE PROJETOS
+*Essa será a URL que o Github irá utilizar no redirecionamento do usuário após a autorização de login.*
 
-A seguir seguem algumas ideias de projetos que você pode implementar:
+Ao confirmar a criação, copie o "Client ID" e o "Client Secret" gerados e guarde para as próximas configurações.
 
-* [Cliente para o GitHub](https://github.com/magrathealabs/template-projeto-selecao/blob/master/projects/GITHUB.md);
-* [Cliente para o Twitter](https://github.com/magrathealabs/template-projeto-selecao/blob/master/projects/TWITTER.md);
-* [Cliente para o Meetup](https://github.com/magrathealabs/template-projeto-selecao/blob/master/projects/MEETUP.md).
+## 2. Banco de Dados
 
-Tem alguma outra ideia? Tem algum projeto que já está pronto e gostaria de apresentar? Fale com a gente :)
+O banco de dados desta aplicação é PostgreSQL.
 
-## COMO COMPARTILHAR O PROJETO CONOSCO
+1. Baixando a imagem oficial do PostgreSQL no DockerHub:
 
-1. Apague este README.md e adicione informações que achar relevante como configurar o projeto, contendo os comandos que devem ser executados para executar ele e os testes;
-2. Abra um PR apontando para a branch master deste repositório;
-3. Escreva qualquer consideração na descrição do PR e faça qualquer comentário que achar pertinente no código.
+```bash
+docker pull postgres
+```
+
+2. Executando a imagem como um contêiner:
+
+```bash
+docker run \
+  --name github-tags-db \ # Nome do contêiner
+  -e POSTGRES_PASSWORD=postgres \ # Senha do usuário de banco de dados
+  -e POSTGRES_DB=github-tags-db \ # Nome do banco de dados a ser gerado na inicialização
+  -p 5432:5432 \ # Mapeamento da porta local para a porta no contêiner
+  -d postgres # Executa a imagem "postgres" em modo "detached"
+```
+
+## 3. Back-end
+
+### 3.1. Para editar o código-fonte
+
+No IntelliJ IDEA:
+
+> "File" -> "Open" -> "Navegue até a pasta deste projeto" -> Clique em "Abrir"
+
+### 3.2. Configurando o arquivo `application-{xxx}.yml` 
+
+Dentro de `src/main/resources`, há dois arquivos de configuração, separados por cada perfil de execução:
+
+#### `dev`
+
+Altere as propriedades `client-id` e `client-secret` presentes no arquivo:
+
+```
+com:
+  tags-server:
+    github:
+      client-id: # Your Client ID Here
+      client-secret: # Your Secret Here
+```
+
+#### `prod`
+
+Optaremos pelo uso de variáveis de ambiente, para não ser necessário fixar no código-fonte informações importantes como as a seguir:
+
+- `SPRING_PROFILES_ACTIVE`: Define qual arquivo de configuração será utilizado. Para esse caso, configuraremos como **`prod`**.
+
+**Para conexão com o banco de dados:**
+
+- `SPRING_DATASOURCE_URL`: A URL JDBC (ex.: `jdbc:postgresql://localhost:5432/github-tags-db`);
+
+- `SPRING_DATASOURCE_USERNAME`: O usuário do banco de dados;
+
+- `SPRING_DATASOURCE_PASSWORD`: A senha do usuário do banco de dados;
+
+
+**Para uso interno da aplicação (Conexão com a API do Github)**
+
+- `TAGS_SERVER_CLIENT_ID`: O "Client ID" registrado na aplicação OAuth no Github;
+
+- `TAGS_SERVER_CLIENT_SECRET`: O "Client Secret" registrado na aplicação OAuth no Github.
+
+
+### 3.3. Executando o projeto
+
+#### Em modo de desenvolvimento:
+
+Abra o Terminal na pasta raíz e execute o seguinte comando:
+
+```bash
+spring_profiles_active=dev ./gradlew bootRun
+```
+
+#### Em modo produção:
+
+Na raíz do projeto, gere o arquivo `.jar` a ser utilizado para execução:
+
+```bash
+./gradlew build
+```
+
+E então, execute o `java` para subir o servidor, utilizando das variáveis de ambiente criadas acima:
+
+```bash
+java $JAVA_OPTS \
+-Dserver.port=8080 \ # Ou a variável $PORT, caso estiver usando o Heroku
+-Dcom.tags-server.github.client-id=$TAGS_SERVER_CLIENT_ID \
+-Dcom.tags-server.github.client-secret=$TAGS_SERVER_CLIENT_SECRET \
+-jar build/libs/github-tags-server-0.0.1-SNAPSHOT.jar
+```
+
+## 4. Front-end
+
