@@ -20,6 +20,7 @@ Este projeto utiliza as seguintes tecnologias:
   * ReactJS
     * Hooks
     * Context API
+    * React Testing Library
   * React Router
   * SASS
   * Javascript
