@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -Dcom.tagsserver.github.client-id=$TAGS_SERVER_CLIENT_ID -Dcom.tagsserver.github.client-secret=$TAGS_SERVER_CLIENT_SECRET -jar build/libs/github-tags-server-0.0.1-SNAPSHOT.jar
+web: java $JAVA_OPTS -Dserver.port=$PORT -Dcom.tags-server.github.client-id=$TAGS_SERVER_CLIENT_ID -Dcom.tags-server.github.client-secret=$TAGS_SERVER_CLIENT_SECRET -jar build/libs/github-tags-server-0.0.1-SNAPSHOT.jar
