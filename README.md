@@ -164,11 +164,15 @@ Abrindo a pasta `github-tags-client` em uma IDE, é possível visualizar a segui
 
 ### 4.2. Configurando as variáveis de ambiente
 
-Para o front-end, será necessário apenas configurar a variável que represente o "Client ID" no Github:
+Para o front-end, vamos usar a mesma variável de ambiente criada para o back-end anteriormente.
 
-No arquivo `.env.development`:
+- No arquivo `.env.{development/production}`:
 
-```REACT_APP_GITHUB_CLIENT_ID=$TAGS_SERVER_CLIENT_ID```
+```env
+REACT_APP_GITHUB_CLIENT_ID=$TAGS_SERVER_CLIENT_ID
+```
+
+A configuração dessa variável no front-end é essencial para o correto funcionamento da funcionalidade "Login com Github".
 
 ### 4.3. Executando a aplicação em desenvolvimento
 
