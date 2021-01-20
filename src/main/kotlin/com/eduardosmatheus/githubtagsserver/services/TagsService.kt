@@ -3,8 +3,8 @@ package com.eduardosmatheus.githubtagsserver.services
 import com.eduardosmatheus.githubtagsserver.model.Tag
 import com.eduardosmatheus.githubtagsserver.repositories.GithubRepoTagsRepository
 import com.eduardosmatheus.githubtagsserver.repositories.TagsRepository
-import org.hibernate.exception.ConstraintViolationException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -20,7 +20,7 @@ class TagsService {
 	fun create(tag: Tag): Tag {
 		return try {
 			tagsRepository.save(tag)
-		} catch (e: ConstraintViolationException) {
+		} catch (e: DataIntegrityViolationException) {
 			throw ResponseStatusException(
 				HttpStatus.UNPROCESSABLE_ENTITY,
 				"Já existe uma tag com esse nome."
