@@ -43,7 +43,7 @@ docker run \
   -d postgres # Executa a imagem "postgres" em modo "detached"
 ```
 
-## 3. Back-end
+## 3. Configurando o back-end
 
 ### 3.1. Para editar o código-fonte
 
@@ -101,6 +101,11 @@ spring_profiles_active=dev ./gradlew bootRun
 
 #### Em modo produção:
 
+##### **IMPORTANTE**
+
+Na classe `WebSecurityConfig.kt`, nas configurações de CORS, adicione às origens permitidas o endereço correspondente a versão de produção do front-end.
+(ex.: https://matheus-github-tags-client.netlify.app)
+
 Na raíz do projeto, gere o arquivo `.jar` a ser utilizado para execução:
 
 ```bash
@@ -119,3 +124,71 @@ java $JAVA_OPTS \
 
 ## 4. Front-end
 
+### 4.1. Editando o código-fonte:
+
+Abrindo a pasta `github-tags-client` em uma IDE, é possível visualizar a seguinte estrutura:
+
+```
++-- public
++-- src
++---- api
++---- components
++---- pages
++---- utils
++ App.js
++ index.js
++ .env.development
++ .env.production
++ package.json
+```
+
+- `public` (Arquivos estáticos)
+
+- `src` (Código Javascript/ReactJS)
+  
+  - `api` (Utilitário para realizar requests)
+  
+  - `components` (Componentes reutilizáveis)
+  
+  - `pages` (As páginas presentes na aplicação)
+  
+  - `utils` (Funções utilitárias para uso geral)
+
+- `App.js` (Contexto principal da aplicação, onde são adicionadas novas rotas.)
+
+- `index.js` (Ponto de partida da aplicação)
+
+- `.env.development` (Variáveis de ambiente para execução em modo de desenvolvimento)
+
+- `.env.production` (Variáveis de ambiente para execução em ambiente de produção)
+
+### 4.2. Configurando as variáveis de ambiente
+
+Para o front-end, será necessário apenas configurar a variável que represente o "Client ID" no Github:
+
+No arquivo `.env.development`:
+
+```REACT_APP_GITHUB_CLIENT_ID=$TAGS_SERVER_CLIENT_ID```
+
+### 4.3. Executando a aplicação em desenvolvimento
+
+Dentro da pasta `github-tags-client`, execute:
+```bash
+yarn start
+```
+
+### 4.4. Executando os testes
+
+```bash
+yarn test
+```
+
+### 4.5. Executando em produção
+
+```bash
+yarn build
+```
+
+```
+serve -s build
+```
