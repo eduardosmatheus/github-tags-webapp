@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faWindowClose, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { toast } from 'react-toastify';
-import Styles from './Tags.module.scss';
+import Styles from './index.module.scss';
 import { withUser } from '../../components/UserProvider';
 import TagForm from './TagForm';
 import api from '../../api';
@@ -79,7 +79,14 @@ function Tags({ user }) {
         />
       </div>
       <div className={Styles.TagsListContent}>
-        {isLoading && <FontAwesomeIcon icon={faSpinner} spin size="6x" />}
+        {isLoading && (
+          <FontAwesomeIcon
+            className="justify-self-center"
+            icon={faSpinner}
+            spin
+            size="6x"
+          />
+        )}
         {!isLoading && data.map(item => (
           <Tag
             key={item.id}

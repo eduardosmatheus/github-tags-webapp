@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '../../../api';
-import Styles from './RepoTagsModal.module.scss';
+import Styles from './index.module.scss';
 import { getMessageFromRequest } from '../../../utils/response';
 
 function RepositoryTag({ name, checked, onAdd, onRemove }) {
