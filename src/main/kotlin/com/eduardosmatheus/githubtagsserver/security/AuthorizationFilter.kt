@@ -4,12 +4,14 @@ import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.stereotype.Component
 import org.springframework.web.filter.GenericFilterBean
 import javax.servlet.FilterChain
 import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 import javax.servlet.http.HttpServletRequest
 
+@Component
 class AuthorizationFilter : GenericFilterBean() {
 
     private fun getUser(token: String): UsernamePasswordAuthenticationToken {
