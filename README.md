@@ -6,6 +6,26 @@
 
 Precisamos poder agrupar, utilizando tags, os repositórios marcados com Estrela no Github, a fim de consultá-los posteriormente por essas mesmas tags.
 
+# [Acesse esta aplicação executada em produção](https://matheus-github-tags-client.netlify.app).
+
+Este projeto utiliza as seguintes tecnologias:
+
+* Banco de dados: PostgreSQL
+* Back-end:
+  * Spring Boot
+    * Spring Data JPA
+    * Spring Security
+  * Kotlin
+* Front-end:
+  * ReactJS
+    * Hooks
+    * Context API
+    * React Testing Library
+  * React Router
+  * SASS
+  * Javascript
+
+
 # Como usar este projeto
 
 ## 1. Registrando uma aplicação OAuth no Github
@@ -164,11 +184,15 @@ Abrindo a pasta `github-tags-client` em uma IDE, é possível visualizar a segui
 
 ### 4.2. Configurando as variáveis de ambiente
 
-Para o front-end, será necessário apenas configurar a variável que represente o "Client ID" no Github:
+Para o front-end, vamos usar a mesma variável de ambiente criada para o back-end anteriormente.
 
-No arquivo `.env.development`:
+- No arquivo `.env.{development/production}`:
 
-```REACT_APP_GITHUB_CLIENT_ID=$TAGS_SERVER_CLIENT_ID```
+```env
+REACT_APP_GITHUB_CLIENT_ID=$TAGS_SERVER_CLIENT_ID
+```
+
+A configuração dessa variável no front-end é essencial para o correto funcionamento da funcionalidade "Login com Github".
 
 ### 4.3. Executando a aplicação em desenvolvimento
 
