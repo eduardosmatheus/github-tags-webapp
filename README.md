@@ -1,4 +1,4 @@
-# PROJETO DE SELEÇÃO
+# Pesquisador de repositórios Github
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/9eab1ae2-909e-43e2-979a-9f88675d1e22/deploy-status)](https://app.netlify.com/sites/matheus-github-tags-client/deploys)
 
